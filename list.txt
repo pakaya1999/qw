@@ -1,0 +1,184 @@
+Task 01:
+1. Create a knowledge base and implement the following instructions.
+1. Create a list of five colors and name the list as Colors and Check the pink is
+available in your list
+
+KB.......
+colors([pink,blue,yellow,black,white]).
+ check:-memberchk(pink,[pink,blue,yellow,black,white]).
+
+prolog........
+?-check.
+
+
+2. Check the user enter colour is available in your list.
+
+KB......
+checkuser:-write('Enter a colour: '),
+ read(Col),
+ memberchk(Col,[pink,blue,yellow,black,white]).
+
+Pro.......
+?-checkuser.
+Enter a color: Black.
+
+
+3. If pink color is unavailable, then add pink to the list. If pink color is
+available then add grey to the list.
+
+KB..........
+avilablecheck:-memberchk(pink,[pink,blue,yellow,black,white]) ->
+ append([grey],[pink,blue,yellow,black,white],NewList),
+ write(NewList);
+ append([pink],[pink,blue,yellow,black,white],NewList),
+ write(NewList).
+
+Pro.........
+?-avilablecheck.
+[grey,pink,blue,yellow,black,white]
+
+
+
+4. Order the list into descending order and display the last colour in the list.
+
+KB.........
+orderlist:-sort(0,@>,[pink,blue,yellow,black,white],NewList),
+ write('descending ordered list: '),
+ write(NewList),
+ last(NewList,X),nl,
+ write('descending ordered list last item: '),
+ write(X).
+
+Pro...........
+?-orederlist.
+decending ordered list:[].
+decending ordered list last item: Black
+
+
+
+Order	Ordering	Duplicate
+@<	ascending	remove
+@=<	ascending	keep
+@>	descending	remove
+@>=	descending 	keep
+
+
+
+5. Display the number of colors in the list.
+
+KB......
+lengthchk:-length([pink,blue,yellow,black,white],Length),
+ write(Length).
+
+Pro......
+?-lengthchk.
+5
+
+
+
+
+Task 02:
+
+1. Create a knowledge base to store student and their score details.
+
+KB.......
+student(name(['Saman', 'Perera']), 11021).
+student(name(['Mohamed', 'Humaith']), 11022).
+student(name(['Nimal', 'Silva']), 11023).
+student(name(['Viji', 'Kumar']), 11024).
+student(name(['Lasantha', 'Jayamanna']), 11025).
+student(name(['Namal', 'Silva']), 11026).
+student(name(['Ponnambalam', 'Ramanadan']), 11027).
+
+marks(11021, score([50, 71, 57, 65, 61])).
+marks(11022, score([65, 50, 85, 49, 82])).
+marks(11023, score([100, 85, 100, 89, 76])).
+marks(11024, score([73, 65, 59, 82, 66])).
+marks(11025, score([60, 90, 78, 96,100])).
+
+
+
+2. Is Janaka Silva an undergraduate student?
+
+KB.....
+checkname:-student(name(['Janaka','Silva']),_).
+
+Pro.........
+?-checkname.
+
+
+3. Who are the registered undergraduates in the departments?
+
+KB......
+registeredstd(X,Y,Z):-student(name([X,Y]),Z).
+
+Pro.........
+?-registeredstd(X.Y.Z).
+X='Saman',
+Y='Perera',
+Z='11021';
+
+
+
+4. Check user entered student registered or not in in the departments?
+
+KB..........
+userinputchk(Fname,Lname):-student(name([Fname,Lname]),_) ->
+ write('Registered');
+ write('Not Registered').
+
+Pro......
+?-userinputshk('Supun','Kumara').
+Not Registered
+
+
+5. What is the index no of Silva?
+
+KB.......
+indexcheck(Lname):-student(name([Fname,Lname]),Index),
+ write(Fname),
+ write(' '),
+ write(Lname),nl,
+ write(Index).
+
+Pro............
+?-indexcheck('Silva').
+Nimal Silava
+11023
+true;
+
+
+
+6. Who sat the examination?
+
+KB.............
+whosatexam:-student(name([Fname,Lname]),Index),
+ marks(Index,score(_)),
+ write(Fname),write(' '),
+ write(Lname),write(' '),
+ write(Index).
+
+Pro............
+?-whosatexam.
+Saman Perera 11021
+True;
+
+
+
+7. Who missed the examination?
+
+KB............
+whomissexam:-student(name([Fname,Lname]),Index),
+ not(marks(Index,score(_))),
+ write(Fname),write(' '),
+ write(Lname),write(' '),
+ write(Index).
+
+Pro.............
+?-whimissexam.
+Namal Silva 11026
+true;
+
+
+
+
